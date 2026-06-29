@@ -1,0 +1,124 @@
+/* ============================================================
+ * 主题契约模板 (Theme Contract Template)
+ * 用法：复制本文件内容，新增风格时只填这一层的值。
+ * 组件层、语义 token 名、工具类都不要改。
+ * ============================================================ */
+
+/* ---- 一次性骨架：语义 token + 组件桥（项目里只写一次）---- */
+/* Tailwind v4：用 @theme inline 把 --color-* 绑到语义变量。
+ * Tailwind v3：改为在 tailwind.config 的 theme.extend.colors 里引用这些变量。 */
+:root {
+  /* primitive：默认主题的原始调色板 */
+  --c-brand-500: #000000;      /* TODO: 主色 */
+  --c-neutral-900: #111111;    /* TODO: 前景 */
+  --c-neutral-50:  #ffffff;    /* TODO: 底色 */
+
+  /* semantic：语义角色，名字跨主题固定（复用契约本身，勿改名） */
+  --background: var(--c-neutral-50);
+  --foreground: var(--c-neutral-900);
+  --primary: var(--c-brand-500);
+  --primary-foreground: var(--c-neutral-50);
+  --secondary: var(--c-neutral-50);
+  --secondary-foreground: var(--c-neutral-900);
+  --muted: var(--c-neutral-50);
+  --muted-foreground: var(--c-neutral-900);
+  --accent: var(--c-brand-500);
+  --accent-foreground: var(--c-neutral-50);
+  --destructive: #d92d20;
+  --destructive-foreground: #ffffff;
+  --border: var(--c-neutral-900);
+  --input: var(--c-neutral-900);
+  --ring: var(--c-brand-500);
+  --radius: 0.5rem;
+
+  /* charts（可选） */
+  --chart-1: var(--c-brand-500);
+  --chart-2: var(--c-brand-500);
+  --chart-3: var(--c-brand-500);
+  --chart-4: var(--c-brand-500);
+  --chart-5: var(--c-brand-500);
+}
+
+/* Tailwind v4 专用：组件桥。工具类(bg-background 等)只消费 semantic，永不碰 primitive。
+ * 这是全局契约，不要在各主题作用域里重复定义。 */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card, var(--background));
+  --color-card-foreground: var(--card-foreground, var(--foreground));
+  --color-popover: var(--popover, var(--background));
+  --color-popover-foreground: var(--popover-foreground, var(--foreground));
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* ============================================================
+ * 每新增一个主题：复制下面这一块，改 <name> 和填值即可。
+ * 外层容器挂 class：<div className="theme-<name> bg-background ...">
+ * ============================================================ */
+.theme-<name> {
+  /* primitive：本主题专属调色板（只在本作用域出现） */
+  --c-...: ...;
+
+  /* semantic 映射：把语义角色指向本主题的 primitive */
+  --background: ...;
+  --foreground: ...;
+  --primary: ...;
+  --primary-foreground: ...;
+  --secondary: ...;
+  --secondary-foreground: ...;
+  --muted: ...;
+  --muted-foreground: ...;
+  --accent: ...;
+  --accent-foreground: ...;
+  --destructive: ...;
+  --destructive-foreground: ...;
+  --border: ...;
+  --input: ...;
+  --ring: ...;
+  --radius: ...;          /* 0rem 硬边 / 0.5rem / 0.75rem 圆润 */
+
+  /* sidebar（仅当使用带侧边栏的后台布局时） */
+  --sidebar: ...;
+  --sidebar-foreground: ...;
+  --sidebar-primary: ...;
+  --sidebar-accent: ...;
+  --sidebar-border: ...;
+  --sidebar-ring: ...;
+
+  /* charts */
+  --chart-1: ...; --chart-2: ...; --chart-3: ...; --chart-4: ...; --chart-5: ...;
+
+  /* 字体：先在框架字体加载器注入 --font-* 变量，再在此引用 */
+  --font-sans: ...;
+  --font-mono: ...;
+
+  color: var(--foreground);
+  background-color: var(--background);
+}
+
+/* 主题专属纹理/动效：务必作用域化，避免污染其他主题或全局 body */
+.theme-<name> .dot-grid-bg {
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
